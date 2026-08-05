@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MVGFC CRM Department Repository Dashboard</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary-green: #004d25;
+      --dark-green: #003318;
+      --light-green: #e6f0eb;
+      --accent-gold: #d4af37;
+      --bright-gold: #f3e5ab;
+      --text-dark: #2c3e50;
+      --text-light: #6c757d;
+      --white: #ffffff;
+      --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      --radius: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #f4f7f5;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
+      color: var(--white);
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 4px solid var(--accent-gold);
+      box-shadow: var(--shadow);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .header-brand img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    .header-titles h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.5px;
+    }
+
+    .header-titles p {
+      font-size: 0.85rem;
+      color: var(--accent-gold);
+      font-weight: 500;
+    }
+
+    .user-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+    }
+
+    .user-badge i {
+      color: var(--accent-gold);
+      font-size: 1.2rem;
+    }
+
+    /* LAYOUT CONTAINER */
+    .dashboard-container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.8rem;
+    }
+
+    /* CARD COMPONENTS */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0, 77, 37, 0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header {
+      background: var(--light-green);
+      padding: 1rem 1.5rem;
+      border-bottom: 2px solid var(--accent-gold);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-header h2 {
+      font-size: 1.1rem;
+      color: var(--primary-green);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+      flex-grow: 1;
+    }
+
+    /* MANDATE IFRAME SECTION */
+    .mandate-section {
+      grid-column: span 12;
+    }
+
+    .mandate-iframe-container {
+      width: 100%;
+      height: 600px;
+      border: none;
+      background: #f8faf9;
+    }
+
+    .mandate-iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* MODULE SPECIFIC GRID PLACEMENT */
+    .module-1 { grid-column: span 6; }
+    .module-2 { grid-column: span 6; }
+    .module-3 { grid-column: span 12; }
+    .module-4 { grid-column: span 12; }
+
+    @media (max-width: 1024px) {
+      .module-1, .module-2 { grid-column: span 12; }
+      .mandate-iframe-container { height: 450px; }
+    }
+
+    /* BUTTONS */
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-green);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--dark-green);
+      box-shadow: 0 2px 8px rgba(0,77,37,0.3);
+    }
+
+    .btn-gold {
+      background-color: var(--accent-gold);
+      color: var(--dark-green);
+      font-weight: 600;
+    }
+
+    .btn-gold:hover {
+      background-color: #c29f2f;
+    }
+
+    .btn-secondary {
+      background-color: #e2e8f0;
+      color: var(--text-dark);
+    }
+
+    .btn-compiler {
+      width: 100%;
+      margin-top: 1.2rem;
+      padding: 0.75rem 1rem;
+      background-color: var(--dark-green);
+      color: var(--white);
+      border: 1px solid var(--accent-gold);
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: all 0.2s ease;
+    }
+
+    .btn-compiler:hover {
+      background-color: var(--primary-green);
+      border-color: var(--bright-gold);
+      box-shadow: 0 4px 12px rgba(0,77,37,0.25);
+    }
+
+    /* MODULE 1: EMAIL DASHBOARD & SCROLLABLE LIST */
+    .email-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .stat-box {
+      background: #fafafa;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 0.8rem;
+      text-align: center;
+    }
+
+    .stat-box span {
+      display: block;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary-green);
+    }
+
+    .stat-box label {
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+
+    .reports-scroll-container {
+      max-height: 260px;
+      overflow-y: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0 0.8rem;
+      background: #fafcfb;
+    }
+
+    .recent-reports {
+      list-style: none;
+    }
+
+    .recent-reports li {
+      padding: 0.65rem 0;
+      border-bottom: 1px solid #edf2f7;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .recent-reports li:last-child {
+      border-bottom: none;
+    }
+
+    .report-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.1rem;
+    }
+
+    .wr-link {
+      color: var(--primary-green);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-decoration: none;
+    }
+
+    .wr-link:hover {
+      text-decoration: underline;
+      color: var(--accent-gold);
+    }
+
+    /* MODULE 2: TICKETING SYSTEM */
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--text-dark);
+    }
+
+    .form-control, select, textarea {
+      width: 100%;
+      padding: 0.65rem;
+      border: 1px solid #cccccc;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      transition: border 0.2s;
+    }
+
+    .form-control:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary-green);
+      box-shadow: 0 0 0 3px rgba(0, 77, 37, 0.1);
+    }
+
+    .file-upload-wrapper {
+      border: 2px dashed var(--accent-gold);
+      background-color: #fffdf5;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s;
+    }
+
+    .file-upload-wrapper:hover {
+      background-color: var(--bright-gold);
+    }
+
+    .file-upload-wrapper input[type="file"] {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .file-upload-icon {
+      font-size: 1.8rem;
+      color: var(--accent-gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .file-name-display {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary-green);
+    }
+
+    /* REPOSITORY LINKS GRID */
+    .repo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .repo-card {
+      border: 1px solid #e2e8f0;
+      border-left: 5px solid var(--primary-green);
+      border-radius: 8px;
+      padding: 1.2rem;
+      background: #fafcfb;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .repo-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      border-left-color: var(--accent-gold);
+    }
+
+    .repo-card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--dark-green);
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .repo-card-desc {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+
+    .repo-link-btn {
+      align-self: flex-start;
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+
+    /* MODAL POPUP FOR COMPOSE EMAIL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--white);
+      width: 100%;
+      max-width: 650px;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      border: 2px solid var(--accent-gold);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      background: var(--primary-green);
+      color: var(--white);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .close-modal {
+      background: transparent;
+      border: none;
+      color: var(--white);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      background: #f8faf9;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.8rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    /* ALERT NOTIFICATION */
+    .alert-toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--primary-green);
+      color: var(--white);
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      border-left: 5px solid var(--accent-gold);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      display: none;
+      align-items: center;
+      gap: 0.8rem;
+      z-index: 1001;
+    }
+
+    .alert-toast.show {
+      display: flex;
+      animation: slideIn 0.3s forwards;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DASHBOARD HEADER -->
+  <header>
+    <div class="header-brand">
+      <img src="https://mvgallego.edu.ph/assets/images/logo-192x192.png" alt="MVGFC Logo">
+      <div class="header-titles">
+        <h1>MANUEL V. GALLEGO FOUNDATION COLLEGES</h1>
+        <p>CRM Department Repository & Operations Dashboard</p>
+      </div>
+    </div>
+    <div class="user-badge">
+      <i class="fa-solid fa-user-shield"></i>
+      <div>
+        <div style="font-size: 0.85rem; font-weight: 600;">CRM Admin Panel</div>
+        <div style="font-size: 0.7rem; color: var(--accent-gold);">Academic Year 2026-2027</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="dashboard-container">
+
+    <!-- BEFORE MODULE 1: MVGFC - CRM MANDATE EMBEDDED PDF IFRAME -->
+    <section class="card mandate-section">
+      <div class="card-header">
+        <h2><i class="fa-solid fa-file-contract"></i> MVGFC - CRM Mandate</h2>
+        <a href="https://drive.google.com/file/d/1p40-hh10oczTLjAaywH6KvRMtQg-JzCk/view?usp=sharing" target="_blank" class="btn btn-gold" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Open External View
+        </a>
+      </div>
+      <div class="mandate-iframe-container">
+        <iframe src="https://docs.google.com/viewer?url=https://drive.google.com/uc?id=1p40-hh10oczTLjAaywH6KvRMtQg-JzCk&embedded=true" allow="autoplay"></iframe>
+      </div>
+    </section>
+
+    <!-- MODULE 1: WEEKLY REPORT TO PRESIDENT -->
+    <section class="card module-1">
+      <div class="card-header">
+        <h2><i class="fa-solid fa-envelope-open-text"></i> Module 1: President's Weekly Report</h2>
+        <button class="btn btn-gold" id="openComposeBtn">
+          <i class="fa-solid fa-pen-to-square"></i> Compose Draft
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="email-stats">
+          <div class="stat-box">
+            <span>34</span>
+            <label>Reports Sent (2026)</label>
+          </div>
+          <div class="stat-box">
+            <span>100%</span>
+            <label>Delivery Rate</label>
+          </div>
+          <div class="stat-box">
+            <span>Fri 5 PM</span>
+            <label>Next Deadline</label>
+          </div>
+        </div>
+
+        <h3 style="font-size: 0.9rem; color: var(--primary-green); margin-bottom: 0.6rem; font-weight: 600;">
+          Recent Submissions to Office of the President
+        </h3>
+        
+        <!-- SCROLLABLE LIST FOR WEEKLY REPORTS 2 TO 35 -->
+        <div class="reports-scroll-container">
+          <ul class="recent-reports">
+            <!-- Dynamically or Static Rendered Reports WR-2 to WR-35 -->
+            <li>
+              <div>
+                <strong>Weekly Report 35</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 34</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 33</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 32</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 31</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 30</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 29</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 28</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 27</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 26</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 25</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 24</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 23</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 22</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 21</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 20</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 19</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 18</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 17</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 16</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 15</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 14</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 13</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 12</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 11</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 10</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 9</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 8</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 7</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 6</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 5</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 4</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 3</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+            <li>
+              <div>
+                <strong>Weekly Report 2</strong>
+                <div class="report-meta">
+                  <span style="font-size: 0.75rem; color: var(--text-light);">To: joseph.gallego@manuelvgallego.onmicrosoft.com</span> • 
+                  <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6" target="_blank" class="wr-link">Click WR-Page to view <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i></a>
+                </div>
+              </div>
+              <span class="btn btn-secondary" style="padding: 0.15rem 0.5rem; font-size: 0.7rem; height: fit-content;">Sent</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- RECTANGULAR COMPILER BUTTON AFTER SUBMISSION LIST -->
+        <a href="https://drive.google.com/drive/folders/16MHoforJCH1sBCMPbgrZgi56wvO2t_m6?usp=sharing" target="_blank" class="btn btn-compiler">
+          <i class="fa-solid fa-folder-closed"></i> CRM Weekly Report Compiler <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem; margin-left: 0.3rem;"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- MODULE 2: CRM TICKETING SYSTEM -->
+    <section class="card module-2">
+      <div class="card-header">
+        <h2><i class="fa-solid fa-ticket"></i> Module 2: CRM Ticketing Dispatch</h2>
+        <span style="font-size: 0.8rem; background: var(--accent-gold); padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: var(--dark-green);">
+          HR & SAO Routing
+        </span>
+      </div>
+      <div class="card-body">
+        <form id="ticketForm">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="ticketRecipient"><i class="fa-solid fa-share"></i> Route Ticket To</label>
+              <select id="ticketRecipient" required>
+                <option value="" disabled selected>Select Target Office...</option>
+                <option value="hr@manuelvgallego.onmicrosoft.com">Human Resources (hr@manuelvgallego.onmicrosoft.com)</option>
+                <option value="sao@manuelvgallego.onmicrosoft.com">Student Affairs Office (SAO)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ticketPriority">Priority Level</label>
+              <select id="ticketPriority">
+                <option value="Normal">Normal</option>
+                <option value="High">High Priority</option>
+                <option value="Urgent">Urgent / Immediate Action</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="ticketSubject">Ticket Subject / Title</label>
+            <input type="text" id="ticketSubject" class="form-control" placeholder="e.g., Student Inquiry Escalation - AY 2026-2027" required>
+          </div>
+
+          <div class="form-group">
+            <label for="ticketDescription">Issue / Inquiry Details</label>
+            <textarea id="ticketDescription" rows="2" placeholder="Provide context regarding the student or administrative request..."></textarea>
+          </div>
+
+          <!-- PDF UPLOAD SECTION -->
+          <div class="form-group">
+            <label><i class="fa-solid fa-file-pdf"></i> Attach PDF Ticket Form</label>
+            <div class="file-upload-wrapper">
+              <i class="fa-solid fa-cloud-arrow-up file-upload-icon"></i>
+              <div style="font-size: 0.85rem; font-weight: 500;">Click or Drag & Drop PDF Form Here</div>
+              <div style="font-size: 0.75rem; color: var(--text-light);">Supported format: .pdf only</div>
+              <input type="file" id="ticketPdfFile" accept="application/pdf" required>
+              <div class="file-name-display" id="fileNameDisplay"></div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+            <i class="fa-solid fa-paper-plane"></i> Submit & Forward Ticket
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- MODULE 3: DATABASES AND REPOSITORIES LINK HUB -->
+    <section class="card module-3">
+      <div class="card-header">
+        <h2><i class="fa-solid fa-database"></i> Module 3: Central Databases & Operational Trackers (2026-2027)</h2>
+        <span style="font-size: 0.8rem; color: var(--primary-green); font-weight: 500;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Links launch in target tab
+        </span>
+      </div>
+      <div class="card-body">
+        <div class="repo-grid">
+
+          <!-- Link 1 -->
+          <div class="repo-card">
+            <div>
+              <div class="repo-card-title">
+                <i class="fa-solid fa-table-cells" style="color: #107c41;"></i>
+                GENERATED LEADS 2026
+              </div>
+              <p class="repo-card-desc">Master list of prospective student leads for current outreach campaigns.</p>
+            </div>
+            <a href="https://docs.google.com/spreadsheets/d/1qlWUCkHKPaPCiHzxJrmbkYrYpGQ2_lHn7G7gJV3G2B4/edit?gid=764746997#gid=764746997" target="_blank" class="btn btn-primary repo-link-btn">
+              Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+            </a>
+          </div>
+
+          <!-- Link 2 -->
+          <div class="repo-card">
+            <div>
+              <div class="repo-card-title">
+                <i class="fa-solid fa-graduation-cap" style="color: #107c41;"></i>
+                CRM College Enrollees Contribution
+              </div>
+              <p class="repo-card-desc">College Department enrollment analytics and contribution metrics (2026 - 2027).</p>
+            </div>
+            <a href="https://docs.google.com/spreadsheets/d/1b_KPNyGD4h15Eqt7sS4Fbptd9ywzWJ4KCK8P--4u0LY/edit?resourcekey=&gid=694788954#gid=694788954" target="_blank" class="btn btn-primary repo-link-btn">
+              Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+            </a>
+          </div>
+
+          <!-- Link 3 -->
+          <div class="repo-card">
+            <div>
+              <div class="repo-card-title">
+                <i class="fa-solid fa-school" style="color: #107c41;"></i>
+                CRM SHS Enrollees Contribution
+              </div>
+              <p class="repo-card-desc">Senior High School enrollment tracking & contribution breakdown (2026 - 2027).</p>
+            </div>
+            <a href="https://docs.google.com/spreadsheets/d/15rdY7_DEIR-sajSG8uS26hku_nurSzk3XmvVIG92kH8/edit?resourcekey=&gid=1961729616#gid=1961729616" target="_blank" class="btn btn-primary repo-link-btn">
+              Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+            </a>
+          </div>
+
+          <!-- Link 4 -->
+          <div class="repo-card">
+            <div>
+              <div class="repo-card-title">
+                <i class="fa-solid fa-child" style="color: #107c41;"></i>
+                CRM JHS Enrollees Contribution
+              </div>
+              <p class="repo-card-desc">Junior High School department enrollment tracker (2026 - 2027).</p>
+            </div>
+            <a href="https://docs.google.com/spreadsheets/d/15rdY7_DEIR-sajSG8uS26hku_nurSzk3XmvVIG92kH8/edit?resourcekey=&gid=1961729616#gid=1961729616" target="_blank" class="btn btn-primary repo-link-btn">
+              Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+            </a>
+          </div>
+
+          <!-- Link 5 -->
+          <div class="repo-card">
+            <div>
+              <div class="repo-card-title">
+                <i class="fa-solid fa-phone-volume" style="color: #107c41;"></i>
+                Retention & Reminder Calls Tracker
+              </div>
+              <p class="repo-card-desc">2026 - 2027 log for student retention monitoring and financial reminder calls.</p>
+            </div>
+            <a href="https://docs.google.com/spreadsheets/d/1GLWYLi58NQrr7BeYV3406S4843PjSC3lAhlFUyQ7hWg/edit?gid=0#gid=0" target="_blank" class="btn btn-primary repo-link-btn">
+              Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+            </a>
+          </div>
+
+          <!-- Link 6 -->
+          <div class="repo-card" style="border-left-color: #0078d4;">
+            <div>
+              <div class="repo-card-title">
+                <i class="fa-solid fa-comments" style="color: #0078d4;"></i>
+                Messenger & Comm Repository
+              </div>
+              <p class="repo-card-desc">Presales SharePoint Excel log for social media inquiries & messenger conversion tracking.</p>
+            </div>
+            <a href="https://manuelvgallego-my.sharepoint.com/:x:/r/personal/arjay_maniego_manuelvgallego_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7B01BB26C1-1E68-4196-9E92-E53409423FF0%7D&file=PRESALES%20-%20Messenger%20Tracker%20Report.xlsx&action=edit&mobileredirect=true&wdMsFormsCorrelationId=d770cb7e-db1e-4d8b-bec4-6f69707e6f97" target="_blank" class="btn btn-primary repo-link-btn" style="background-color: #0078d4;">
+              Open SharePoint <i class="fa-solid fa-external-link"></i>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 4: GOVERNANCE, SPIELS & DOCUMENT REPOSITORIES -->
+    <section class="card module-4">
+      <div class="card-header">
+        <h2><i class="fa-solid fa-folder-tree"></i> Module 4: Governance, Communications & Process Repositories</h2>
+        <span style="font-size: 0.8rem; color: var(--primary-green); font-weight: 500;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Links launch in target tab
+        </span>
+      </div>
+      <div class="card-body">
+        <div class="repo-grid">
+
+          <!-- Link 1 -->
+          <div class="repo-card">
+            <div>
+              <div class="repo-card-title">
+                <i class="fa-solid fa-comment-dots" style="color: #107c41;"></i>
+                Feedback & Complaints Tracker
+              </div>
+              <p class="repo-card-desc">CRM monitoring log for escalated student/parent feedback, complaints, and resolution tracking.</p>
+            </div>
+            <a href="https://docs.google.com/spreadsheets/d/1EAdwkNc5MAncR_N7k5ThERnucUGN4VwkRf7CcsQHUpA/edit" target="_blank" class="btn btn-primary repo-link-btn">
+              Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+            </a>
+          </div>
+
+          <!-- Link 2 -->
+          <div class="repo-card" style="border-left-color: #ffb900;">
+            <div>
+              <div class="repo-card-title">
+                <i class="fa-solid fa-folder-open" style="color: #d4af37;"></i>
+                Incoming & Outgoing Letters
+              </div>
+              <p class="repo-card-desc">Google Drive storage for all institutional letters, official correspondence, and memos.</p>
+            </div>
+            <a href="https://drive.google.com/drive/folders/1eCTwgCKYFfM9oipEur-GSK04mvARAvcX?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn" style="background-color: #004d25;">
+              Open Drive Folder <i class="fa-solid fa-external-link"></i>
+            </a>
+          </div>
+
+          <!-- Link 3 -->
+          <div class="repo-card" style="border-left-color: #ffb900;">
+            <div>
+              <div class="repo-card-title">
+                <i class="fa-solid fa-headset" style="color: #d4af37;"></i>
+                CRM Spiels Repository
+              </div>
+              <p class="repo-card-desc">Standardized communication scripts, call guidelines, and messaging spiels for agents.</p>
+            </div>
+            <a href="https://drive.google.com/drive/folders/17cO1qcVd1QupDVI8qZk_n0QBTa7IzYM8?usp=drive_link" target="_blank" class="btn btn-primary repo-link-btn" style="background-color: #004d25;">
+              Open Drive Folder <i class="fa-solid fa-external-link"></i>
+            </a>
+          </div>
+
+          <!-- Link 4 -->
+          <div class="repo-card" style="border-left-color: #ffb900;">
+            <div>
+              <div class="repo-card-title">
+                <i class="fa-solid fa-book-bookmark" style="color: #d4af37;"></i>
+                Documented Process Manuals
+              </div>
+              <p class="repo-card-desc">Central database of approved CRM Standard Operating Procedures (SOPs) and manuals.</p>
+            </div>
+            <a href="https://drive.google.com/drive/folders/1R6WkrqVpR6QoSvlwqjVnDp5FUvXTBJyu?usp=drive_link" target="_blank" class="btn btn-primary repo-link-btn" style="background-color: #004d25;">
+              Open Drive Folder <i class="fa-solid fa-external-link"></i>
+            </a>
+          </div>
+
+          <!-- Link 5 -->
+          <div class="repo-card" style="border-left-color: #ffb900;">
+            <div>
+              <div class="repo-card-title">
+                <i class="fa-solid fa-sitemap" style="color: #d4af37;"></i>
+                Over-all File Distribution
+              </div>
+              <p class="repo-card-desc">Master Drive directory containing full departmental archives and administrative resources.</p>
+            </div>
+            <a href="https://drive.google.com/drive/folders/1IrVj-jJFstqPkeXQeKVFehsbfwyUhvMe?usp=drive_link" target="_blank" class="btn btn-primary repo-link-btn" style="background-color: #004d25;">
+              Open Drive Folder <i class="fa-solid fa-external-link"></i>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: COMPOSE EMAIL TO PRESIDENT -->
+  <div class="modal-overlay" id="composeModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-paper-plane"></i> Send Weekly Report to President</h3>
+        <button class="close-modal" id="closeComposeBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="emailForm">
+          <div class="form-group">
+            <label>To:</label>
+            <input type="text" class="form-control" value="Office of the President <joseph.gallego@manuelvgallego.onmicrosoft.com>" disabled>
+          </div>
+          <div class="form-group">
+            <label for="emailSubject">Subject Line</label>
+            <input type="text" id="emailSubject" class="form-control" value="MVGFC CRM Weekly Status Report - [Week Ending August 2026]" required>
+          </div>
+          <div class="form-group">
+            <label for="emailBody">Report Content / Executive Summary</label>
+            <textarea id="emailBody" rows="6" required>Dear Mr. President,
+
+Please find the summary of CRM operations, lead conversions, and department contributions for this week:
+
+1. Generated Leads Progress:
+2. College, SHS, JHS Contributions:
+3. Retention & Reminder Calls Progress:
+
+Respectfully submitted,
+CRM Department</textarea>
+          </div>
+          <div class="form-group">
+            <label><i class="fa-solid fa-paperclip"></i> Attachment</label>
+            <input type="file" class="form-control">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancelComposeBtn">Cancel</button>
+        <button type="button" class="btn btn-gold" id="sendEmailBtn"><i class="fa-solid fa-paper-plane"></i> Send Email</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="alert-toast" id="toast">
+    <i class="fa-solid fa-circle-check" style="color: var(--accent-gold); font-size: 1.5rem;"></i>
+    <div id="toastMessage">Action completed successfully.</div>
+  </div>
+
+  <!-- INTERACTIVE DASHBOARD SCRIPT -->
+  <script>
+    // --- UI ELEMENTS ---
+    const openComposeBtn = document.getElementById('openComposeBtn');
+    const closeComposeBtn = document.getElementById('closeComposeBtn');
+    const cancelComposeBtn = document.getElementById('cancelComposeBtn');
+    const composeModal = document.getElementById('composeModal');
+    const sendEmailBtn = document.getElementById('sendEmailBtn');
+    
+    const ticketForm = document.getElementById('ticketForm');
+    const ticketPdfFile = document.getElementById('ticketPdfFile');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+
+    // --- MODAL CONTROLS ---
+    openComposeBtn.addEventListener('click', () => composeModal.classList.add('active'));
+    closeComposeBtn.addEventListener('click', () => composeModal.classList.remove('active'));
+    cancelComposeBtn.addEventListener('click', () => composeModal.classList.remove('active'));
+
+    // --- TOAST NOTIFICATION HELPER ---
+    function showNotification(msg) {
+      toastMessage.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000);
+    }
+
+    // --- MODULE 1: EMAIL DISPATCH SIMULATION ---
+    sendEmailBtn.addEventListener('click', () => {
+      const subject = document.getElementById('emailSubject').value;
+      if (!subject) {
+        alert('Please specify a subject for the weekly report.');
+        return;
+      }
+      composeModal.classList.remove('active');
+      showNotification('Weekly Report successfully transmitted to joseph.gallego@manuelvgallego.onmicrosoft.com!');
+    });
+
+    // --- MODULE 2: FILE SELECTION DISPLAY ---
+    ticketPdfFile.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        const file = e.target.files[0];
+        if (file.type !== 'application/pdf') {
+          alert('Please upload a valid PDF document.');
+          ticketPdfFile.value = '';
+          fileNameDisplay.textContent = '';
+          return;
+        }
+        fileNameDisplay.textContent = `Attached: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+      }
+    });
+
+    // --- MODULE 2: TICKET DISPATCH SIMULATION ---
+    ticketForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const targetOffice = document.getElementById('ticketRecipient').value;
+
+      if (!ticketPdfFile.files.length) {
+        alert('Please attach the required PDF Ticket Form.');
+        return;
+      }
+
+      showNotification(`Ticket routed to ${targetOffice} successfully with PDF attachment!`);
+      ticketForm.reset();
+      fileNameDisplay.textContent = '';
+    });
+  </script>
+</body>
+</html>
