@@ -1155,23 +1155,25 @@
         <div class="card-header">
           <h2><i class="fa-solid fa-ticket"></i> Module 2: CRM Ticketing Dispatch</h2>
           <span style="font-size: 0.8rem; background: var(--accent-gold); padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600; color: var(--dark-green);">
-            HR & SAO Routing
+            HR & OSAS Routing
           </span>
         </div>
         <div class="card-body">
-          <form id="ticketForm">
+          <form id="ticketForm" action="https://formsubmit.co/crmmvgfc@gmail.com" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="_subject" value="New CRM Ticket Submission">
+            <input type="hidden" name="_template" value="table">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
               <div class="form-group">
                 <label for="ticketRecipient"><i class="fa-solid fa-share"></i> Route Ticket To</label>
-                <select id="ticketRecipient" required>
+                <select id="ticketRecipient" name="Route Ticket To" required>
                   <option value="" disabled selected>Select Target Office...</option>
-                  <option value="hr@manuelvgallego.onmicrosoft.com">Human Resources (hr@manuelvgallego.onmicrosoft.com)</option>
-                  <option value="sao@manuelvgallego.onmicrosoft.com">Student Affairs Office (SAO)</option>
+                  <option value="Human Resources (HR)">Human Resources (HR)</option>
+                  <option value="Office of Student Affairs and Services (OSAS)">Office of Student Affairs and Services (OSAS)</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="ticketPriority">Priority Level</label>
-                <select id="ticketPriority">
+                <select id="ticketPriority" name="Priority Level">
                   <option value="Normal">Normal</option>
                   <option value="High">High Priority</option>
                   <option value="Urgent">Urgent / Immediate Action</option>
@@ -1181,12 +1183,12 @@
 
             <div class="form-group">
               <label for="ticketSubject">Ticket Subject / Title</label>
-              <input type="text" id="ticketSubject" class="form-control" placeholder="e.g., Student Inquiry Escalation - AY 2026-2027" required>
+              <input type="text" id="ticketSubject" name="Ticket Subject" class="form-control" placeholder="e.g., Student Inquiry Escalation - AY 2026-2027" required>
             </div>
 
             <div class="form-group">
               <label for="ticketDescription">Issue / Inquiry Details</label>
-              <textarea id="ticketDescription" rows="2" placeholder="Provide context regarding the student or administrative request..."></textarea>
+              <textarea id="ticketDescription" name="Issue or Inquiry Details" rows="2" placeholder="Provide context regarding the student or administrative request..."></textarea>
             </div>
 
             <!-- PDF UPLOAD SECTION -->
@@ -1196,9 +1198,14 @@
                 <i class="fa-solid fa-cloud-arrow-up file-upload-icon"></i>
                 <div style="font-size: 0.85rem; font-weight: 500;">Click or Drag & Drop PDF Form Here</div>
                 <div style="font-size: 0.75rem; color: var(--text-light);">Supported format: .pdf only</div>
-                <input type="file" id="ticketPdfFile" accept="application/pdf" required>
+                <input type="file" id="ticketPdfFile" name="attachment" accept="application/pdf" required>
                 <div class="file-name-display" id="fileNameDisplay"></div>
               </div>
+            </div>
+
+            <div class="form-group" style="display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.8rem; color: var(--text-light);">
+              <input type="checkbox" id="ticketPolicyAcknowledgement" name="CRM EOMS Policy and DPMS Acknowledgement" value="Acknowledged" required style="margin-top: 0.3rem;">
+              <label for="ticketPolicyAcknowledgement">I acknowledge that all actions in this system are governed by the accompanying CRM EOMS Policy and DPMS.</label>
             </div>
 
             <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
@@ -1228,8 +1235,8 @@
                 </div>
                 <p class="repo-card-desc">Master list of prospective student leads for current outreach campaigns.</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/1qlWUCkHKPaPCiHzxJrmbkYrYpGQ2_lHn7G7gJV3G2B4/edit?gid=764746997#gid=764746997" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/1qlWUCkHKPaPCiHzxJrmbkYrYpGQ2_lHn7G7gJV3G2B4/edit?gid=764746997#gid=764746997" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1242,8 +1249,8 @@
                 </div>
                 <p class="repo-card-desc">College Department enrollment analytics and contribution metrics (2026 - 2027).</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/1b_KPNyGD4h15Eqt7sS4Fbptd9ywzWJ4KCK8P--4u0LY/edit?resourcekey=&gid=694788954#gid=694788954" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/1b_KPNyGD4h15Eqt7sS4Fbptd9ywzWJ4KCK8P--4u0LY/edit?resourcekey=&gid=694788954#gid=694788954" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1256,8 +1263,8 @@
                 </div>
                 <p class="repo-card-desc">Senior High School enrollment tracking & contribution breakdown (2026 - 2027).</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/15rdY7_DEIR-sajSG8uS26hku_nurSzk3XmvVIG92kH8/edit?resourcekey=&gid=1961729616#gid=1961729616" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/15rdY7_DEIR-sajSG8uS26hku_nurSzk3XmvVIG92kH8/edit?resourcekey=&gid=1961729616#gid=1961729616" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1270,8 +1277,8 @@
                 </div>
                 <p class="repo-card-desc">Junior High School department enrollment tracker (2026 - 2027).</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/15rdY7_DEIR-sajSG8uS26hku_nurSzk3XmvVIG92kH8/edit?resourcekey=&gid=1961729616#gid=1961729616" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/15rdY7_DEIR-sajSG8uS26hku_nurSzk3XmvVIG92kH8/edit?resourcekey=&gid=1961729616#gid=1961729616" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1284,8 +1291,8 @@
                 </div>
                 <p class="repo-card-desc">2026 - 2027 log for student retention monitoring and financial reminder calls.</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/1GLWYLi58NQrr7BeYV3406S4843PjSC3lAhlFUyQ7hWg/edit?gid=0#gid=0" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/1GLWYLi58NQrr7BeYV3406S4843PjSC3lAhlFUyQ7hWg/edit?gid=0#gid=0" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1312,8 +1319,8 @@
                 </div>
                 <p class="repo-card-desc">Central risk register and risk management monitoring repository for CRM operations.</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/1XCwlXPQ_1h_HRmY0ShyfFimRpEx2TdPp/edit?usp=sharing&ouid=101121783767156724924&rtpof=true&sd=true" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/1XCwlXPQ_1h_HRmY0ShyfFimRpEx2TdPp/edit?usp=sharing&ouid=101121783767156724924&rtpof=true&sd=true" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1326,8 +1333,8 @@
                 </div>
                 <p class="repo-card-desc">KPI and KRA matrices for monitoring CRM performance, responsibilities, and key results.</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/1CBKDASmPqxfBAYLf_ny1lX-hunsM-bPRlYSKXh933Vo/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/1CBKDASmPqxfBAYLf_ny1lX-hunsM-bPRlYSKXh933Vo/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1355,8 +1362,8 @@
                 </div>
                 <p class="repo-card-desc">CRM monitoring log for escalated student/parent feedback, complaints, and resolution tracking.</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/1EAdwkNc5MAncR_N7k5ThERnucUGN4VwkRf7CcsQHUpA/edit" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/1EAdwkNc5MAncR_N7k5ThERnucUGN4VwkRf7CcsQHUpA/edit" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1440,8 +1447,8 @@
                 </div>
                 <p class="repo-card-desc">Alumni exit survey repository for collecting graduating student feedback and transition insights.</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/1SjskcvDEFp-SOZgdLYurChF5gNcuvZ5wdqQt34GZyMo/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/1SjskcvDEFp-SOZgdLYurChF5gNcuvZ5wdqQt34GZyMo/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1454,8 +1461,8 @@
                 </div>
                 <p class="repo-card-desc">Alumni contact and outreach repository supporting graduate tracer activities.</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/1NTv7X2VcZy5gYQjgZSOtADxPqC-PtDgD36VXo1AaETg/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/1NTv7X2VcZy5gYQjgZSOtADxPqC-PtDgD36VXo1AaETg/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1468,8 +1475,8 @@
                 </div>
                 <p class="repo-card-desc">Tracking repository for complaints, actions taken, resolution status, and follow-up.</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/1iXpOQ2QZYUv-Y5S8ZTXPNL-RpA0gkZZW54KjnzBhVo0/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/1iXpOQ2QZYUv-Y5S8ZTXPNL-RpA0gkZZW54KjnzBhVo0/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1482,8 +1489,8 @@
                 </div>
                 <p class="repo-card-desc">Institutional customer satisfaction survey responses and feedback data repository.</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/1V3-Cn4mwnCGdBMlIbL43S1QKX0ddAPqRLSj-FdlVVAs/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/1V3-Cn4mwnCGdBMlIbL43S1QKX0ddAPqRLSj-FdlVVAs/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1496,8 +1503,8 @@
                 </div>
                 <p class="repo-card-desc">Feedback response repository for monitoring customer experience with canteen services.</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/1D6vzVEK82rhLaKgRlbx6vBpAt4z1IqoQtc6E33M1-eY/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/1D6vzVEK82rhLaKgRlbx6vBpAt4z1IqoQtc6E33M1-eY/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1510,8 +1517,8 @@
                 </div>
                 <p class="repo-card-desc">Overall complaints monitoring, follow-up, status, and resolution database.</p>
               </div>
-              <a href="https://docs.google.com/spreadsheets/d/1ijiNg6n1smJib5U-w8-8F35hNsXIoCMpMTEBgU0c1t0/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
-                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              <a href="https://docs.google.com/dashboard/d/1ijiNg6n1smJib5U-w8-8F35hNsXIoCMpMTEBgU0c1t0/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Database / Open Dashboard <i class="fa-solid fa-external-link"></i>
               </a>
             </div>
 
@@ -1522,7 +1529,7 @@
     </main>
 
     <footer class="dashboard-footer">
-      Developed by MV Gallego <strong>CRM Office</strong>
+      Developer by <strong>CRM Office</strong>
     </footer>
   </div>
 
@@ -1707,20 +1714,7 @@ CRM Department</textarea>
       }
     });
 
-    // --- MODULE 2: TICKET DISPATCH SIMULATION ---
-    ticketForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const targetOffice = document.getElementById('ticketRecipient').value;
-
-      if (!ticketPdfFile.files.length) {
-        alert('Please attach the required PDF Ticket Form.');
-        return;
-      }
-
-      showNotification(`Ticket routed to ${targetOffice} successfully with PDF attachment!`);
-      ticketForm.reset();
-      fileNameDisplay.textContent = '';
-    });
   </script>
 </body>
 </html>
+
