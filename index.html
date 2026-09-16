@@ -297,6 +297,21 @@
     .module-2 { grid-column: span 6; }
     .module-3 { grid-column: span 12; }
     .module-4 { grid-column: span 12; }
+    .module-5 { grid-column: span 12; }
+
+    .dashboard-footer {
+      text-align: center;
+      padding: 1.2rem 1rem 2rem;
+      color: var(--text-light);
+      font-size: 0.78rem;
+      border-top: 1px solid rgba(0, 77, 37, 0.08);
+      margin-top: 1rem;
+    }
+
+    .dashboard-footer strong {
+      color: var(--primary-green);
+      font-weight: 600;
+    }
 
     @media (max-width: 1024px) {
       .module-1, .module-2 { grid-column: span 12; }
@@ -676,6 +691,9 @@
         <div class="header-titles">
           <h1>MANUEL V. GALLEGO FOUNDATION COLLEGES</h1>
           <p>CRM Department Repository & Operations Dashboard</p>
+          <div style="font-size: 0.78rem; color: var(--white); margin-top: 0.2rem; font-weight: 500;">
+            Alagang Kallidad from Enrollment to Employment
+          </div>
         </div>
       </div>
       <div class="header-actions">
@@ -726,6 +744,11 @@
           <i class="fa-solid fa-folder-tree"></i>
           <h3>Module 4: Process Repositories</h3>
           <p>Spiels library, document manuals, logs & file distributions</p>
+        </div>
+        <div class="clickable-box" onclick="routeToModule('m5')">
+          <i class="fa-solid fa-face-smile"></i>
+          <h3>Module 5: Customer Satisfaction, Feedback, and Complaints Tracker</h3>
+          <p>Customer satisfaction surveys, alumni tracking, feedback, complaints & resolution records</p>
         </div>
       </div>
     </div>
@@ -1280,6 +1303,34 @@
               </a>
             </div>
 
+            <!-- Link 7 -->
+            <div class="repo-card">
+              <div>
+                <div class="repo-card-title">
+                  <i class="fa-solid fa-triangle-exclamation" style="color: #107c41;"></i>
+                  CRM Risk Register and Risk Management
+                </div>
+                <p class="repo-card-desc">Central risk register and risk management monitoring repository for CRM operations.</p>
+              </div>
+              <a href="https://docs.google.com/spreadsheets/d/1XCwlXPQ_1h_HRmY0ShyfFimRpEx2TdPp/edit?usp=sharing&ouid=101121783767156724924&rtpof=true&sd=true" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              </a>
+            </div>
+
+            <!-- Link 8 -->
+            <div class="repo-card">
+              <div>
+                <div class="repo-card-title">
+                  <i class="fa-solid fa-bullseye" style="color: #107c41;"></i>
+                  KPI and KRA Matrices
+                </div>
+                <p class="repo-card-desc">KPI and KRA matrices for monitoring CRM performance, responsibilities, and key results.</p>
+              </div>
+              <a href="https://docs.google.com/spreadsheets/d/1CBKDASmPqxfBAYLf_ny1lX-hunsM-bPRlYSKXh933Vo/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              </a>
+            </div>
+
           </div>
         </div>
       </section>
@@ -1369,7 +1420,110 @@
         </div>
       </section>
 
+      <!-- MODULE 5: CUSTOMER SATISFACTION, FEEDBACK, AND COMPLAINTS TRACKER -->
+      <section class="card module-5" id="sec-m5">
+        <div class="card-header">
+          <h2><i class="fa-solid fa-face-smile"></i> Module 5: Customer Satisfaction, Feedback, and Complaints Tracker</h2>
+          <span style="font-size: 0.8rem; color: var(--primary-green); font-weight: 500;">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Links launch in target tab
+          </span>
+        </div>
+        <div class="card-body">
+          <div class="repo-grid">
+
+            <!-- Link 1 -->
+            <div class="repo-card">
+              <div>
+                <div class="repo-card-title">
+                  <i class="fa-solid fa-graduation-cap" style="color: #107c41;"></i>
+                  Alumni Exit Survey
+                </div>
+                <p class="repo-card-desc">Alumni exit survey repository for collecting graduating student feedback and transition insights.</p>
+              </div>
+              <a href="https://docs.google.com/spreadsheets/d/1SjskcvDEFp-SOZgdLYurChF5gNcuvZ5wdqQt34GZyMo/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              </a>
+            </div>
+
+            <!-- Link 2 -->
+            <div class="repo-card">
+              <div>
+                <div class="repo-card-title">
+                  <i class="fa-solid fa-users" style="color: #107c41;"></i>
+                  Alumni Reaching Repository for Graduate Tracer
+                </div>
+                <p class="repo-card-desc">Alumni contact and outreach repository supporting graduate tracer activities.</p>
+              </div>
+              <a href="https://docs.google.com/spreadsheets/d/1NTv7X2VcZy5gYQjgZSOtADxPqC-PtDgD36VXo1AaETg/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              </a>
+            </div>
+
+            <!-- Link 3 -->
+            <div class="repo-card">
+              <div>
+                <div class="repo-card-title">
+                  <i class="fa-solid fa-clipboard-check" style="color: #107c41;"></i>
+                  Complaints Resolution Tracking
+                </div>
+                <p class="repo-card-desc">Tracking repository for complaints, actions taken, resolution status, and follow-up.</p>
+              </div>
+              <a href="https://docs.google.com/spreadsheets/d/1iXpOQ2QZYUv-Y5S8ZTXPNL-RpA0gkZZW54KjnzBhVo0/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              </a>
+            </div>
+
+            <!-- Link 4 -->
+            <div class="repo-card">
+              <div>
+                <div class="repo-card-title">
+                  <i class="fa-solid fa-star" style="color: #107c41;"></i>
+                  Institutional Customer Satisfaction Survey
+                </div>
+                <p class="repo-card-desc">Institutional customer satisfaction survey responses and feedback data repository.</p>
+              </div>
+              <a href="https://docs.google.com/spreadsheets/d/1V3-Cn4mwnCGdBMlIbL43S1QKX0ddAPqRLSj-FdlVVAs/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              </a>
+            </div>
+
+            <!-- Link 5 -->
+            <div class="repo-card">
+              <div>
+                <div class="repo-card-title">
+                  <i class="fa-solid fa-utensils" style="color: #107c41;"></i>
+                  Canteen Services Feedback Responses
+                </div>
+                <p class="repo-card-desc">Feedback response repository for monitoring customer experience with canteen services.</p>
+              </div>
+              <a href="https://docs.google.com/spreadsheets/d/1D6vzVEK82rhLaKgRlbx6vBpAt4z1IqoQtc6E33M1-eY/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              </a>
+            </div>
+
+            <!-- Link 6 -->
+            <div class="repo-card">
+              <div>
+                <div class="repo-card-title">
+                  <i class="fa-solid fa-list-check" style="color: #107c41;"></i>
+                  Over All Complaints Tracker and Follow Up Database
+                </div>
+                <p class="repo-card-desc">Overall complaints monitoring, follow-up, status, and resolution database.</p>
+              </div>
+              <a href="https://docs.google.com/spreadsheets/d/1ijiNg6n1smJib5U-w8-8F35hNsXIoCMpMTEBgU0c1t0/edit?usp=sharing" target="_blank" class="btn btn-primary repo-link-btn">
+                Open Spreadsheet <i class="fa-solid fa-external-link"></i>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
     </main>
+
+    <footer class="dashboard-footer">
+      Developed by MV Gallego <strong>CRM Office</strong>
+    </footer>
   </div>
 
   <!-- MODAL: COMPOSE EMAIL TO PRESIDENT -->
@@ -1461,6 +1615,7 @@ CRM Department</textarea>
     const secM2 = document.getElementById('sec-m2');
     const secM3 = document.getElementById('sec-m3');
     const secM4 = document.getElementById('sec-m4');
+    const secM5 = document.getElementById('sec-m5');
 
     function routeToModule(target) {
       landingHub.style.display = 'none';
@@ -1473,6 +1628,7 @@ CRM Department</textarea>
       secM2.style.display = 'none';
       secM3.style.display = 'none';
       secM4.style.display = 'none';
+      secM5.style.display = 'none';
 
       // Restore specific module layouts cleanly
       if (target === 'mandate') {
@@ -1485,6 +1641,8 @@ CRM Department</textarea>
         secM3.style.display = 'block';
       } else if (target === 'm4') {
         secM4.style.display = 'block';
+      } else if (target === 'm5') {
+        secM5.style.display = 'block';
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
